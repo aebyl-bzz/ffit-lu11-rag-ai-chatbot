@@ -40,7 +40,17 @@ public class DocumentService {
         }
         List<String> result = new ArrayList<>();
 
-        // TODO: implement logic
+        int position = 0;
+        int textLength = text.length();
+        
+        while (position < textLength) {
+            int endPosition = Math.min(position + chunkSize, textLength);
+            String chunk = text.substring(position, endPosition);
+            result.add(chunk);
+            
+            // Move forward by (chunkSize - overlap) to create overlapping chunks
+            position += (chunkSize - overlap);
+        }
 
         log.debug("Created {} chunks with chunkSize {} and overlap {}", result.size(), chunkSize, overlap);
         return result;
